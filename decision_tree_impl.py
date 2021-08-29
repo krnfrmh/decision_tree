@@ -18,3 +18,14 @@ class TreeNode:
         self.max_depth = max_depth
         if self.max_depth is not None and self.max_depth < self.depth:
             raise Exception("depth > max_depth")
+            
+    def information_gain(self, x, y, split):
+        y0 = y[x < split]
+        y1 = y[x >= split]
+        N = len(y)
+        y0len = len(y0)
+        if y0len == 0 or y0len == N:
+            return 0
+        p0 = float(len(y0)) / N
+        p1 = 1 - p0 #float(len(y1)) / N
+        return entropy(y) - p0*entropy(y0) - p1*entropy(y1)
