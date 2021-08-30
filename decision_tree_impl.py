@@ -19,6 +19,14 @@ class TreeNode:
         if self.max_depth is not None and self.max_depth < self.depth:
             raise Exception("depth > max_depth")
             
+    def fit(self, X, Y):
+        if len(Y) == 1 or len(set(Y)) == 1:
+            self.col = None
+            self.split = None
+            self.left = None
+            self.right = None
+            self.prediction = Y[0]
+            
     def information_gain(self, x, y, split):
         y0 = y[x < split]
         y1 = y[x >= split]
