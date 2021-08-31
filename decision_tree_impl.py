@@ -27,6 +27,24 @@ class TreeNode:
             self.right = None
             self.prediction = Y[0]
             
+    def find_split(self, X, Y, col):
+        x_values = X[:, col]
+        sort_idx = np.argsort(x_values)
+        x_values = x_values[sort_idx]
+        y_values = Y[sort_idx]
+        
+        # boundaries between 2 classes or midpoint between 2 points
+        boundaries = np.nonzero(y_values[:-1] != y_values[1:])[0]
+        best_split = None
+        max_ig = 0
+        for b in boundaries:
+            split = (x_values[b] + x_values[b+1]) / 2
+            ig = self.information_gain(x_values, y_values, split)
+            if ig > max_ig:
+                max_ig = ig
+                best_split = split
+        return max_ig, best_split
+            
     def information_gain(self, x, y, split):
         y0 = y[x < split]
         y1 = y[x >= split]
