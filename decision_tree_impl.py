@@ -26,6 +26,18 @@ class TreeNode:
             self.left = None
             self.right = None
             self.prediction = Y[0]
+        else:
+            D = X.shape[1]
+            cols = range(D)
+            max_ig = 0
+            best_col = None
+            best_split = None
+            for col in cols:
+                ig, split = self.find_split(X, Y, col)
+                if ig > max_ig:
+                    max_ig = ig
+                    best_col = col
+                    best_split = split
             
     def find_split(self, X, Y, col):
         x_values = X[:, col]
