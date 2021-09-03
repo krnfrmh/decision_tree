@@ -38,6 +38,12 @@ class TreeNode:
                     max_ig = ig
                     best_col = col
                     best_split = split
+            if max_ig == 0:
+                self.col = None
+                self.split = None
+                self.left = None
+                self.right = None
+                self.prediction = np.round(Y.mean())
             
     def find_split(self, X, Y, col):
         x_values = X[:, col]
