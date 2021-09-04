@@ -53,8 +53,19 @@ class TreeNode:
                     self.right = None
                     self.prediction = [
                         np.round(Y[X[:,best_col] < self.split].mean()),
-                        np.round(Y[X[:,best_col] >= self.split].mean()),
-                    ]
+                        np.round(Y[X[:,best_col] >= self.split].mean())]
+                else:
+                    left_idx = (X[:,best_col] < best_split)
+                    Xleft = X[left_idx]
+                    Yleft = Y[left_idx]
+                    self.left = TreeNode(self.depth + 1, self.max_depth)
+                    self.left.fit(Xleft, Yleft)
+
+                    right_idx = (X[:,best_col] >= best_split)
+                    Xright = X[right_idx]
+                    Yright = Y[right_idx]
+                    self.right = TreeNode(self.depth + 1, self.max_depth)
+                    self.right.fit(Xright, Yright)
             
     def find_split(self, X, Y, col):
         x_values = X[:, col]
