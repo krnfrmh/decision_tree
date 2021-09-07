@@ -95,3 +95,20 @@ class TreeNode:
         p0 = float(len(y0)) / N
         p1 = 1 - p0 #float(len(y1)) / N
         return entropy(y) - p0*entropy(y0) - p1*entropy(y1)
+    
+    def predict_one(self, x):
+        if self.col is not None and self.split is not None:
+            feature = x[self.col]
+            if feature < self.split:
+                if self.left:
+                    p = self.left.predict_one(x)
+                else:
+                    p = self.prediction[0]
+            else:
+                if self.right:
+                    p = self.right.predict_one(x)
+                else:
+                    p = self.prediction[1]
+        else:
+            p = self.prediction
+        return p
