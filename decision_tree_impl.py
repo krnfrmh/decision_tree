@@ -112,3 +112,10 @@ class TreeNode:
         else:
             p = self.prediction
         return p
+    
+    def predict(self, X):
+        N = len(X)
+        P = np.zeros(N)
+        for i in range(N):
+            P[i] = self.predict_one(X[i])
+        return P
