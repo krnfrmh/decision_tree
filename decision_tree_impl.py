@@ -1,4 +1,5 @@
 import numpy as np
+from utils import get_data
 from decision_tree import DecisionTree
 
 def entropy(y):
